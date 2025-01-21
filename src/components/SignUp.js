@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function SignUp({ signUpUser }) {
-  const navigate = useNavigate(); // Hook to navigate after successful signup
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -10,19 +10,13 @@ function SignUp({ signUpUser }) {
 
   const handleSignUp = (e) => {
     e.preventDefault();
-
-    // Dummy validation: In a real-world app, validate email format, etc.
     if (!username || !email || !password) {
       setError('Please fill out all fields.');
       return;
     }
 
-    // Simulate user signup (In a real app, you'd call an API here)
-    // Call the signUpUser function passed from App.js to update authentication
-    signUpUser(username, email);
-    
-    // After successful signup, redirect to login page
-    navigate('/login');
+    signUpUser(username, email, password);
+    navigate('/home'); // Redirect to the home page after successful signup
   };
 
   return (
