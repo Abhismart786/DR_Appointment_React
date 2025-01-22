@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import Login from './components/Login';
 import Home from './components/Home';
-import SignUp from './components/Signup';
+import Signup from './components/Signup';
 
 // Mock users database
 const mockUsers = [
@@ -12,10 +12,9 @@ const mockUsers = [
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
-  const [users, setUsers] = useState(mockUsers); // Array of users
+  const [users, setUsers] = useState(mockUsers);
 
   const loginUser = (username, password) => {
-    // Authenticate by checking the username and password
     const foundUser = users.find(
       (user) => user.username === username && user.password === password
     );
@@ -28,14 +27,12 @@ function App() {
   };
 
   const signUpUser = (username, email, password) => {
-    // Check if username already exists
     const userExists = users.some((user) => user.username === username);
     if (userExists) {
       alert('Username already exists');
       return;
     }
 
-    // Add new user to the mock "database"
     const newUser = { username, email, password };
     setUsers([...users, newUser]);
     setUser(newUser);
@@ -45,22 +42,13 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route
-          path="/login"
-          element={<Login loginUser={loginUser} />}
-        />
-        <Route
-          path="/sign-up"
-          element={<SignUp signUpUser={signUpUser} />}
-        />
+        <Route path="/login" element={<Login loginUser={loginUser} />} />
+        <Route path="/sign-up" element={<Signup signUpUser={signUpUser} />} />
         <Route
           path="/home"
           element={isAuthenticated ? <Home user={user} /> : <Navigate to="/login" />}
         />
-        <Route
-          path="/"
-          element={<Navigate to="/login" />}
-        />
+        <Route path="/" element={<Navigate to="/login" />} />
       </Routes>
     </div>
   );
