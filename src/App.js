@@ -5,7 +5,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import Login from './components/Login';
 import Home from './components/Home';
 import Signup from './components/Signup';
-import { auth } from './firebase';
+import { auth } from './components/Firebase';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
