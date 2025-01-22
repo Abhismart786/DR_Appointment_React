@@ -1,14 +1,31 @@
+// src/components/Login.js
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase';
 
-function Login({ loginUser }) {
-  const [username, setUsername] = useState('');
+function Login() {
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    loginUser(username, password);
+
+    if (!email || !password) {
+      setError('Please fill out all fields.');
+      return;
+    }
+
+    try {
+      // Log the user in with Firebase Authentication
+      await signInWithEmailAndPassword(auth, email, password);
+      setError('');
+      navigate('/home'); // Redirect to home after successful login
+    } catch (error) {
+      setError(error.message); // Display Firebase error message
+    }
   };
 
   return (
@@ -16,12 +33,12 @@ function Login({ loginUser }) {
       <h2>Login</h2>
       <form onSubmit={handleLogin}>
         <div>
-          <label htmlFor="username">Username</label>
+          <label htmlFor="email">Email</label>
           <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div>
