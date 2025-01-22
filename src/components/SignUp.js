@@ -1,84 +1,86 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from './Firebase';
-import { updateProfile } from 'firebase/auth'; // Import for updating user profile
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { auth, createUserWithEmailAndPassword, updateProfile } from "./Firebase"; // Correct import from firebaseConfig
 
-function Signup() {
-  const [name, setName] = useState(''); // State to hold the name
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+const Signup = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(""); // For displaying error messages
   const navigate = useNavigate();
 
-  const handleSignUp = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!name || !email || !password) {
-      setError('Please fill out all fields.');
+      setError("Please fill out all fields.");
       return;
     }
 
     try {
-      // Create user with email and password
+      // Create a new user using Firebase Authentication
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Update the user's profile with their name
+      // Set the displayName to the user's name
       await updateProfile(user, {
         displayName: name,
       });
 
-      setError('');
-      navigate('/home'); // Redirect to home after successful signup
+      // Redirect to the home page
+      navigate("/home");
     } catch (error) {
-      setError(error.message); // Display Firebase error message
+      console.error("Error creating user:", error);
+      if (error.code === "auth/email-already-in-use") {
+        setError("This email is already in use.");
+      } else {
+        setError("Failed to create an account. Please try again.");
+      }
     }
   };
 
   return (
     <div className="sign-up-container">
       <h2>Sign Up</h2>
-      <form onSubmit={handleSignUp}>
-        <div>
-          <label htmlFor="name">Name</label>
-          <input
-            type="text"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Enter your name"
-          />
-        </div>
-        <div>
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your email"
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter your password"
-          />
-        </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit">Sign Up</button>
-      </form>
+      <form onSubmit={handleSubmit}>
+        {error && <p className="error-message">{error}</p>}
 
-      <p>
-        Already have an account? <Link to="/login">Login here</Link>
-      </p>
+        <label htmlFor="name">Name</label>
+        <input
+          type="text"
+          id="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Enter your name"
+        />
+
+        <label htmlFor="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Enter your email"
+        />
+
+        <label htmlFor="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Enter your password"
+        />
+
+        <button type="submit">Sign Up</button>
+
+        <p>
+          Already have an account?{" "}
+          <a href="/login">Login here</a>
+        </p>
+      </form>
     </div>
   );
-}
+};
 
 export default Signup;

@@ -1,15 +1,73 @@
-/* SignUp Page */
-.sign-up-container {
-  width: 300px;
-  margin: 50px auto;
+/* Global styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f8fb;
+  color: #333;
+  line-height: 1.6;
+}
+
+h1, h2 {
+  color: #2c3e50;
+  font-weight: bold;
+  text-align: center;
+}
+
+p {
+  color: #555;
+  font-size: 14px;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+a {
+  text-decoration: none;
+  color: #3498db;
+}
+
+a:hover {
+  color: #2980b9;
+}
+
+/* Centering content and adding spacing */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Flexbox helper classes */
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Sign Up Page */
+.sign-up-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #fff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
 
 .sign-up-container h2 {
-  text-align: center;
+  margin-bottom: 20px;
+  color: #2c3e50;
 }
 
 .sign-up-container form {
@@ -19,43 +77,67 @@
 
 .sign-up-container label {
   margin-bottom: 5px;
+  color: #555;
+  font-weight: 500;
+  font-size: 14px;
 }
 
 .sign-up-container input {
-  padding: 8px;
-  margin-bottom: 15px;
+  padding: 12px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #333;
+  background-color: #f8f8f8;
+  transition: border 0.3s;
+  margin-bottom: 15px; /* Proper space between input fields */
+}
+
+.sign-up-container input:focus {
+  border-color: #3498db;
+  background-color: #fff;
 }
 
 .sign-up-container button {
-  padding: 10px;
-  background-color: #4CAF50;
+  padding: 12px;
+  background-color: #3498db;
   color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  margin-top: 20px; /* Add space before button */
 }
 
 .sign-up-container button:hover {
-  background-color: #45a049;
+  background-color: #2980b9;
 }
 
 .sign-up-container p {
   text-align: center;
+  font-size: 14px;
+  color: #777;
 }
+
+.sign-up-container p a {
+  font-weight: bold;
+}
+
+
 /* Login Page */
 .login-container {
-  width: 300px;
+  width: 100%;
+  max-width: 400px;
   margin: 50px auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  background-color: #fff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
 
 .login-container h2 {
-  text-align: center;
+  margin-bottom: 20px;
+  color: #2c3e50;
 }
 
 .login-container form {
@@ -65,28 +147,95 @@
 
 .login-container label {
   margin-bottom: 5px;
+  color: #555;
+  font-weight: 500;
+  font-size: 14px;
 }
 
 .login-container input {
-  padding: 8px;
-  margin-bottom: 15px;
+  padding: 12px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #333;
+  background-color: #f8f8f8;
+  transition: border 0.3s;
+  margin-bottom: 15px; /* Proper space between input fields */
+}
+
+.login-container input:focus {
+  border-color: #3498db;
+  background-color: #fff;
 }
 
 .login-container button {
-  padding: 10px;
-  background-color: #4CAF50;
+  padding: 12px;
+  background-color: #3498db;
   color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  margin-top: 20px; /* Add space before button */
 }
 
 .login-container button:hover {
-  background-color: #45a049;
+  background-color: #2980b9;
 }
 
 .login-container p {
   text-align: center;
+  font-size: 14px;
+  color: #777;
+}
+
+.login-container p a {
+  font-weight: bold;
+}
+
+/* Home Page */
+.home-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 40px;
+  background-color: #fff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.home-container h1 {
+  font-size: 24px;
+  color: #2c3e50;
+}
+
+.home-container p {
+  color: #555;
+  font-size: 16px;
+}
+
+.home-container button {
+  margin-top: 20px;
+  padding: 12px 25px;
+  background-color: #e74c3c;
+  color: white;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.home-container button:hover {
+  background-color: #c0392b;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sign-up-container,
+  .login-container,
+  .home-container {
+    width: 90%;
+    padding: 20px;
+  }
 }

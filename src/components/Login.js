@@ -1,64 +1,66 @@
-// src/components/Login.js
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from './Firebase';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { auth, signInWithEmailAndPassword } from "./Firebase"; // Correct import from firebaseConfig
 
-function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(""); // To handle errors
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!email || !password) {
-      setError('Please fill out all fields.');
+      setError("Please fill out all fields.");
       return;
     }
 
     try {
-      // Log the user in with Firebase Authentication
+      // Sign in the user using Firebase Authentication
       await signInWithEmailAndPassword(auth, email, password);
-      setError('');
-      navigate('/home'); // Redirect to home after successful login
+
+      // Redirect to the home page on successful login
+      navigate("/home");
     } catch (error) {
-      setError(error.message); // Display Firebase error message
+      console.error("Error signing in:", error);
+      setError("Invalid email or password.");
     }
   };
 
   return (
     <div className="login-container">
       <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit">Login</button>
-      </form>
+      <form onSubmit={handleSubmit}>
+        {error && <p className="error-message">{error}</p>}
 
-      <p>
-        Don't have an account? <Link to="/sign-up">Sign up here</Link>
-      </p>
+        <label htmlFor="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Enter your email"
+        />
+
+        <label htmlFor="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Enter your password"
+        />
+
+        <button type="submit">Login</button>
+
+        <p>
+          Don't have an account?{" "}
+          <a href="/sign-up">Sign up here</a>
+        </p>
+      </form>
     </div>
   );
-}
+};
 
 export default Login;

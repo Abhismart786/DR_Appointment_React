@@ -1,34 +1,46 @@
-// src/App.js
-import React, { useState, useEffect } from 'react';
-import { Route, Routes, Navigate } from 'react-router-dom';
-import { onAuthStateChanged } from 'firebase/auth';
-import Login from './components/Login';
-import Home from './components/Home';
-import Signup from './components/Signup';
-import { auth } from './components/Firebase';
+import React, { useState, useEffect } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
+import Home from "./components/Home";
+import { auth } from "./components/Firebase"; // Import auth from Firebase
+import { onAuthStateChanged } from "firebase/auth"; // Listen for auth state changes
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Listen for auth state changes
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
+    // Listen for authentication state changes
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
         setIsAuthenticated(true);
+        setUser(currentUser);
       } else {
         setIsAuthenticated(false);
+        setUser(null);
       }
     });
+
+    // Clean up the subscription
+    return () => unsubscribe();
   }, []);
 
   return (
     <div className="App">
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/sign-up" element={<Signup />} />
+        {/* If the user is authenticated, navigate to home, otherwise redirect to login */}
+        <Route
+          path="/login"
+          element={isAuthenticated ? <Navigate to="/home" /> : <Login />}
+        />
+        <Route
+          path="/sign-up"
+          element={isAuthenticated ? <Navigate to="/home" /> : <Signup />}
+        />
         <Route
           path="/home"
-          element={isAuthenticated ? <Home /> : <Navigate to="/login" />}
+          element={isAuthenticated ? <Home user={user} /> : <Navigate to="/login" />}
         />
         <Route path="/" element={<Navigate to="/login" />} />
       </Routes>
