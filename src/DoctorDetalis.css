@@ -1,0 +1,69 @@
+/* DoctorDetails.css */
+.doctor-details-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .doctor-profile h2 {
+    font-size: 2rem;
+    color: #4caf50;
+  }
+  
+  .doctor-profile p {
+    font-size: 1.2rem;
+    color: #555;
+  }
+  
+  .doctor-schedule h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-top: 20px;
+  }
+  
+  .doctor-schedule ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .doctor-schedule li {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .book-button {
+    background-color: #4caf50;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .book-button:hover {
+    background-color: #388e3c;
+  }
+  
+  .back-button {
+    background-color: #f44336;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  
+  .back-button:hover {
+    background-color: #d32f2f;
+  }
+  
