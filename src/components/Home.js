@@ -43,7 +43,7 @@ const doctors = {
     { name: 'Dr. Steven Rogers', specialization: 'Gastroenterologist', phone: '999-000-1234', rating: 4.7, fee: 180 },
     { name: 'Dr. Karen Lewis', specialization: 'Gastroenterologist', phone: '666-777-8888', rating: 4.6, fee: 160 }
   ],
-  // Add more specializations...
+  
 };
 
 function Home() {
@@ -81,7 +81,7 @@ function Home() {
         <h1>Welcome, {user.displayName || "User"}!</h1>
         <p className="email">Email: {user.email}</p>
       </header>
-      
+      <h1>Here are some recommendentation of specializations with doctors</h1>
       <div className="specializations">
         {Object.keys(doctors).map((specialization, index) => (
           <div 
