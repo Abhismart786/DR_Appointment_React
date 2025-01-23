@@ -1,7 +1,7 @@
 // DoctorDetails.js
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import './DoctorDetails.css'; // Add styling for doctor details page
+import './DoctorDetalis.css'; // Add styling for doctor details page
 
 function DoctorDetails() {
   const location = useLocation();

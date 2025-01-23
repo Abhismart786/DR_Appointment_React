@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth } from './Firebase';
-import './Home.css';
+
 
 const doctors = {
   'Cardiology': [
@@ -11,6 +11,38 @@ const doctors = {
   'Dermatology': [
     { name: 'Dr. Emily White', specialization: 'Dermatologist', phone: '555-555-5555', description: 'Specializes in skin care and dermatological treatments.' },
     { name: 'Dr. James Green', specialization: 'Dermatologist', phone: '333-333-3333', description: 'Experienced in treating various skin conditions.' }
+  ],
+  'Orthopedics': [
+    { name: 'Dr. Sarah Lee', specialization: 'Orthopedist', phone: '444-444-4444' },
+    { name: 'Dr. Mark Taylor', specialization: 'Orthopedist', phone: '666-666-6666' }
+  ],
+  'Pediatrics': [
+    { name: 'Dr. Lily Adams', specialization: 'Pediatrician', phone: '789-123-4560' },
+    { name: 'Dr. Thomas King', specialization: 'Pediatrician', phone: '123-789-4561' }
+  ],
+  'Neurology': [
+    { name: 'Dr. Robert Stone', specialization: 'Neurologist', phone: '111-222-3333' },
+    { name: 'Dr. Jessica Collins', specialization: 'Neurologist', phone: '444-555-6666' }
+  ],
+  'Gynecology': [
+    { name: 'Dr. Rachel Ford', specialization: 'Gynecologist', phone: '888-222-5555' },
+    { name: 'Dr. Monica Park', specialization: 'Gynecologist', phone: '777-888-9999' }
+  ],
+  'Ophthalmology': [
+    { name: 'Dr. Daniel Cooper', specialization: 'Ophthalmologist', phone: '555-333-4444' },
+    { name: 'Dr. Olivia Young', specialization: 'Ophthalmologist', phone: '444-222-1111' }
+  ],
+  'Dentistry': [
+    { name: 'Dr. Mary Adams', specialization: 'Dentist', phone: '666-111-3333' },
+    { name: 'Dr. Richard Hall', specialization: 'Dentist', phone: '333-555-4444' }
+  ],
+  'Psychiatry': [
+    { name: 'Dr. William Evans', specialization: 'Psychiatrist', phone: '777-333-2222' },
+    { name: 'Dr. Nancy Wright', specialization: 'Psychiatrist', phone: '888-444-6666' }
+  ],
+  'Gastroenterology': [
+    { name: 'Dr. Steven Rogers', specialization: 'Gastroenterologist', phone: '999-000-1234' },
+    { name: 'Dr. Karen Lewis', specialization: 'Gastroenterologist', phone: '666-777-8888' }
   ],
   // Add more specializations...
 };

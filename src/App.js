@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Home from "./components/Home";
+import DoctorDetails from "./DoctorDetails"; // Import DoctorDetails component
 import { auth } from "./components/Firebase"; // Import auth from Firebase
 import { onAuthStateChanged } from "firebase/auth"; // Listen for auth state changes
 
@@ -41,6 +42,11 @@ function App() {
         <Route
           path="/home"
           element={isAuthenticated ? <Home user={user} /> : <Navigate to="/login" />}
+        />
+        {/* Doctor details page */}
+        <Route
+          path="/doctor-details"
+          element={isAuthenticated ? <DoctorDetails /> : <Navigate to="/login" />}
         />
         <Route path="/" element={<Navigate to="/login" />} />
       </Routes>
