@@ -82,6 +82,7 @@ function Home() {
         <p className="email">Email: {user.email}</p>
       </header>
       <h1>Here are some recommendentation of specializations with doctors</h1>
+      <br/>
       <div className="specializations">
         {Object.keys(doctors).map((specialization, index) => (
           <div 
