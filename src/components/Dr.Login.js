@@ -1,12 +1,13 @@
+// Dr.Login.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth, signInWithEmailAndPassword } from "./Firebase"; // Correct import from firebaseConfig
-import { Link } from "react-router-dom"; // Import Link for navigation
+import { auth, signInWithEmailAndPassword } from "./Firebase"; // Firebase auth imports
+import { Link } from "react-router-dom";
 
-const Login = () => {
+const DrLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(""); // To handle errors
+  const [error, setError] = useState(""); // Error handling
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -18,20 +19,20 @@ const Login = () => {
     }
 
     try {
-      // Sign in the user using Firebase Authentication
+      // Sign in the doctor using Firebase Authentication
       await signInWithEmailAndPassword(auth, email, password);
 
-      // Redirect to the home page on successful login
-      navigate("/home");
+      // Redirect to the doctor home page on successful login
+      navigate("/doctor-home");
     } catch (error) {
-      console.error("Error signing in:", error);
+      console.error("Error signing in doctor:", error);
       setError("Invalid email or password.");
     }
   };
 
   return (
     <div className="login-container">
-      <h2>Login</h2>
+      <h2>Dr. Login</h2>
       <form onSubmit={handleSubmit}>
         {error && <p className="error-message">{error}</p>}
 
@@ -57,11 +58,11 @@ const Login = () => {
 
         <p>
           Don't have an account?{" "}
-          <Link to="/sign-up">Sign up here</Link>
+          <Link to="/dr-signup">Sign up here</Link>
         </p>
       </form>
     </div>
   );
 };
 
-export default Login;
+export default DrLogin;

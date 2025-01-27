@@ -1,36 +1,41 @@
+// Dr.Signup.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth, createUserWithEmailAndPassword, updateProfile } from "./Firebase"; // Correct import from firebaseConfig
+import { auth, createUserWithEmailAndPassword, updateProfile } from "./Firebase"; // Firebase auth imports
+import { Link } from "react-router-dom";
 
-const Signup = () => {
+const DrSignup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(""); // For displaying error messages
+  const [specialization, setSpecialization] = useState(""); // Doctor's specialization
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!name || !email || !password) {
+    if (!name || !email || !password || !specialization) {
       setError("Please fill out all fields.");
       return;
     }
 
     try {
-      // Create a new user using Firebase Authentication
+      // Create doctor user using Firebase Authentication
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Set the displayName to the user's name
+      // Set the displayName and specialization for the doctor
       await updateProfile(user, {
         displayName: name,
       });
 
-      // Redirect to the home page
-      navigate("/home");
+      // Optionally, you can save the specialization info to Firestore or Realtime Database
+
+      // Redirect to the doctor home page
+      navigate("/doctor-home");
     } catch (error) {
-      console.error("Error creating user:", error);
+      console.error("Error creating doctor account:", error);
       if (error.code === "auth/email-already-in-use") {
         setError("This email is already in use.");
       } else {
@@ -41,7 +46,7 @@ const Signup = () => {
 
   return (
     <div className="sign-up-container">
-      <h2>Sign Up</h2>
+      <h2>Dr. Signup</h2>
       <form onSubmit={handleSubmit}>
         {error && <p className="error-message">{error}</p>}
 
@@ -52,6 +57,15 @@ const Signup = () => {
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Enter your name"
+        />
+
+        <label htmlFor="specialization">Specialization</label>
+        <input
+          type="text"
+          id="specialization"
+          value={specialization}
+          onChange={(e) => setSpecialization(e.target.value)}
+          placeholder="Enter your specialization"
         />
 
         <label htmlFor="email">Email</label>
@@ -76,11 +90,11 @@ const Signup = () => {
 
         <p>
           Already have an account?{" "}
-          <a href="/login">Login here</a>
+          <Link to="/dr-login">Login here</Link>
         </p>
       </form>
     </div>
   );
 };
 
-export default Signup;
+export default DrSignup;

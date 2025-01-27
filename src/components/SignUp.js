@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, createUserWithEmailAndPassword, updateProfile } from "./Firebase"; // Correct import from firebaseConfig
+import { Link } from "react-router-dom"; // Import Link for navigation
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -76,7 +77,7 @@ const Signup = () => {
 
         <p>
           Already have an account?{" "}
-          <a href="/login">Login here</a>
+          <Link to="/login">Login here</Link>
         </p>
       </form>
     </div>
