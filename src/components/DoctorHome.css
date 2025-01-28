@@ -1,0 +1,175 @@
+/* Doctor Home Page Container */
+.doctor-home-container {
+    font-family: Arial, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .header h1 {
+    color: #2c3e50;
+    font-size: 2em;
+  }
+  
+  .email {
+    color: #7f8c8d;
+    font-size: 1.2em;
+  }
+  
+  /* Specializations Section */
+  .specializations {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+  
+  .specialization-card {
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 200px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .specialization-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .specialization-card h3 {
+    font-size: 1.5em;
+    color: #3498db;
+  }
+  
+  .specialization-card p {
+    font-size: 1em;
+    color: #7f8c8d;
+  }
+  
+  /* Recommended Doctors Section */
+  .recommended-doctors {
+    margin-bottom: 30px;
+  }
+  
+  .recommended-doctors ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .doctor-card {
+    background-color: #fff;
+    padding: 20px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .doctor-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .doctor-card h4 {
+    font-size: 1.2em;
+    color: #2c3e50;
+  }
+  
+  .doctor-card p {
+    color: #7f8c8d;
+  }
+  
+  .doctor-card strong {
+    color: #3498db;
+  }
+  
+  /* Appointments Section */
+  h1, h2 {
+    font-size: 1.8em;
+    color: #2c3e50;
+    margin-bottom: 20px;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    background-color: #fff;
+    padding: 20px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  li p {
+    font-size: 1em;
+    color: #7f8c8d;
+  }
+  
+  button {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #2980b9;
+  }
+  
+  .logout-button {
+    background-color: #e74c3c;
+    margin-top: 20px;
+    font-size: 1.2em;
+    padding: 15px 30px;
+  }
+  
+  .logout-button:hover {
+    background-color: #c0392b;
+  }
+  
+  /* Responsiveness */
+  @media (max-width: 768px) {
+    .specializations {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .specialization-card {
+      width: 80%;
+      max-width: 300px;
+    }
+  
+    .recommended-doctors ul {
+      padding-left: 20px;
+    }
+  
+    .doctor-card {
+      width: 80%;
+      max-width: 300px;
+    }
+  }
+  

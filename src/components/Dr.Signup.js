@@ -1,38 +1,44 @@
-// Dr.Signup.js
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; 
 import { auth, createUserWithEmailAndPassword, updateProfile } from "./Firebase"; // Firebase auth imports
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"; // For linking to login page
 
 const DrSignup = () => {
+  // State for storing user inputs
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [specialization, setSpecialization] = useState(""); // Doctor's specialization
-  const [error, setError] = useState("");
-  const navigate = useNavigate();
+  const [error, setError] = useState(""); // To store error messages
+  const navigate = useNavigate();  // Hook for navigation after successful signup
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Check if all fields are filled
     if (!name || !email || !password || !specialization) {
       setError("Please fill out all fields.");
       return;
     }
 
     try {
-      // Create doctor user using Firebase Authentication
+      // Create a doctor user using Firebase Authentication
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Set the displayName and specialization for the doctor
+      // Set the displayName to the doctor's name
       await updateProfile(user, {
         displayName: name,
       });
 
-      // Optionally, you can save the specialization info to Firestore or Realtime Database
+      // Save doctor's additional information (like specialization) to Firebase Database (optional)
+      // Assuming you use Firebase Realtime Database or Firestore
+      // You can add this line to save specialization (if you're using Realtime Database)
+      // const userRef = ref(database, "doctors/" + user.uid);
+      // await set(userRef, { specialization: specialization });
 
-      // Redirect to the doctor home page
+      // Redirect doctor to the doctor home page after successful signup
       navigate("/doctor-home");
     } catch (error) {
       console.error("Error creating doctor account:", error);

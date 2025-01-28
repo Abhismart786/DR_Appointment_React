@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth, signInWithEmailAndPassword } from "./Firebase"; // Correct import from firebaseConfig
+import { auth, signInWithEmailAndPassword, database, ref, get } from "./Firebase"; // Correct imports
 import { Link } from "react-router-dom"; // Import Link for navigation
 
 const Login = () => {
@@ -19,10 +19,28 @@ const Login = () => {
 
     try {
       // Sign in the user using Firebase Authentication
-      await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
 
-      // Redirect to the home page on successful login
-      navigate("/home");
+      // Fetch user data from Firebase to get the role
+      const userRef = ref(database, "users/" + user.uid);
+      const snapshot = await get(userRef);
+      
+      if (!snapshot.exists()) {
+        setError("User data not found.");
+        return;
+      }
+
+      const userData = snapshot.val();
+      const userRole = userData.role;
+
+      // Redirect based on the user's role
+      if (userRole === "doctor") {
+        navigate("/doctor-home");
+      } else {
+        navigate("/patient-home");
+      }
+
     } catch (error) {
       console.error("Error signing in:", error);
       setError("Invalid email or password.");
@@ -56,8 +74,7 @@ const Login = () => {
         <button type="submit">Login</button>
 
         <p>
-          Don't have an account?{" "}
-          <Link to="/sign-up">Sign up here</Link>
+          Don't have an account? <Link to="/sign-up">Sign up here</Link>
         </p>
       </form>
     </div>

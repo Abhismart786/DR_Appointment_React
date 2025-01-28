@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { database, ref, set, push } from './components/Firebase';  // Import database-related functions
+import { database, ref, push, set } from './components/Firebase';  // Import push
 import './DoctorDetalis.css';
-
 function DoctorDetails() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { doctor, setAppointments } = location.state;
+  const { doctor, setAppointments } = location.state;  // Destructure correctly
 
   const [availableSlots, setAvailableSlots] = useState([]);
   const [patientName, setPatientName] = useState('');
@@ -31,19 +30,17 @@ function DoctorDetails() {
       doctor: doctor.name,
       patientName: patientName,
       slot: slot,
-      createdAt: new Date().toISOString(),  // Store the time of appointment creation
+      createdAt: new Date().toISOString(), // Adding a timestamp for sorting
+      status: 'pending', // Default status for new appointments
     };
 
-    // Reference to the appointments node in Firebase Realtime Database
-    const appointmentsRef = ref(database, 'appointments/');  // "appointments" node
-    const newAppointmentRef = push(appointmentsRef);  // Use push() to generate a unique key
-
-    // Write the new appointment to the database
+    // Push the new appointment to the Firebase database under 'appointments'
+    const appointmentsRef = ref(database, 'appointments');
+    const newAppointmentRef = push(appointmentsRef);  // Generates a unique ID
     set(newAppointmentRef, appointment)
       .then(() => {
-        alert('Appointment booked and saved in Firebase!');
-        setAppointments((prevAppointments) => [...prevAppointments, appointment]); // Update local state
-        navigate('/doctor-home'); // Navigate back to DoctorHome page
+        alert('Appointment booked successfully!');
+        navigate('/doctor-home');
       })
       .catch((error) => {
         alert('Error booking appointment: ' + error.message);
