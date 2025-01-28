@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
-import Login from "./components/Login";
-import Signup from "./components/Signup"; // User signup page component
-import DrLogin from "./components/Dr.Login"; // Doctor login page
-import DrSignup from "./components/Dr.Signup"; // Doctor signup page
-import Home from "./components/Home"; // Home page
-import DoctorHome from "./components/DoctorHome.js"; // Doctor home page
-import DoctorDetails from "./DoctorDetails"; // Doctor details page component
-import { auth } from "./components/Firebase"; // Firebase auth
-import { onAuthStateChanged } from "firebase/auth"; // Listen for auth state changes
+import React, { useState, useEffect } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import Login from './components/Login';
+import Signup from './components/Signup';
+import DrLogin from './components/Dr.Login';
+import DrSignup from './components/Dr.Signup';
+import Home from './components/Home';
+import DoctorHome from './components/DoctorHome';
+import DoctorDetails from './DoctorDetails';
+import { auth } from './components/Firebase';
+import { onAuthStateChanged } from 'firebase/auth';
+import { AppointmentsProvider } from './components/AppointmentsContext';  // Import the provider
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Listen for authentication state changes
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         setIsAuthenticated(true);
@@ -25,57 +25,53 @@ function App() {
         setUser(null);
       }
     });
-
-    // Clean up the subscription
     return () => unsubscribe();
   }, []);
 
   return (
-    <div className="App">
-      <Routes>
-        {/* User Login Route */}
-        <Route
-          path="/login"
-          element={isAuthenticated ? <Navigate to="/home" /> : <Login />}
-        />
+    <AppointmentsProvider>  {/* Wrap your app with the provider */}
+      <div className="App">
+        <Routes>
+          {/* User Login and Signup */}
+          <Route
+            path="/login"
+            element={isAuthenticated ? <Navigate to="/home" /> : <Login />}
+          />
+          <Route
+            path="/sign-up"
+            element={isAuthenticated ? <Navigate to="/home" /> : <Signup />}
+          />
 
-        {/* User Signup Route */}
-        <Route
-          path="/sign-up"
-          element={isAuthenticated ? <Navigate to="/home" /> : <Signup />}
-        />
+          {/* Doctor Login and Signup */}
+          <Route
+            path="/dr-login"
+            element={isAuthenticated ? <Navigate to="/doctor-home" /> : <DrLogin />}
+          />
+          <Route
+            path="/dr-signup"
+            element={isAuthenticated ? <Navigate to="/doctor-home" /> : <DrSignup />}
+          />
 
-        {/* Doctor Login Route */}
-        <Route
-          path="/dr-login"
-          element={isAuthenticated ? <Navigate to="/doctor-home" /> : <DrLogin />}
-        />
+          {/* Home for User */}
+          <Route
+            path="/home"
+            element={isAuthenticated ? <Home user={user} /> : <Navigate to="/login" />}
+          />
 
-        {/* Doctor Signup Route */}
-        <Route
-          path="/dr-signup"
-          element={isAuthenticated ? <Navigate to="/doctor-home" /> : <DrSignup />}
-        />
+          {/* Doctor Home */}
+          <Route
+            path="/doctor-home"
+            element={isAuthenticated ? <DoctorHome /> : <Navigate to="/dr-login" />}
+          />
 
-        {/* Home Page (protected route) */}
-        <Route
-          path="/home"
-          element={isAuthenticated ? <Home user={user} /> : <Navigate to="/login" />}
-        />
-
-        {/* Doctor Home Page (protected route) */}
-        <Route
-          path="/doctor-home"
-          element={isAuthenticated ? <DoctorHome user={user} /> : <Navigate to="/dr-login" />}
-        />
-
-        {/* Doctor Details Page */}
-        <Route
-          path="/doctor-details"
-          element={isAuthenticated ? <DoctorDetails /> : <Navigate to="/dr-login" />}
-        />
-      </Routes>
-    </div>
+          {/* Doctor Details */}
+          <Route
+            path="/doctor-details"
+            element={isAuthenticated ? <DoctorDetails /> : <Navigate to="/dr-login" />}
+          />
+        </Routes>
+      </div>
+    </AppointmentsProvider>
   );
 }
 
