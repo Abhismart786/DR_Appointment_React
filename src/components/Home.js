@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth } from './Firebase';
+ // Assuming you have some basic styles for this component.
 
 const doctors = {
   'Cardiology': [
@@ -48,31 +49,34 @@ const doctors = {
 
 function Home() {
   const navigate = useNavigate();
-  
   const [recommendedDoctors, setRecommendedDoctors] = useState([]);
   const [user, setUser] = useState(null);
 
+  // Fetch current user when the component is mounted
   useEffect(() => {
     const currentUser = auth.currentUser;
     setUser(currentUser);
   }, []);
 
+  // If no user is logged in, navigate to login page
   if (!user) {
     navigate('/login');
     return null;
   }
 
+  // Logout function
   const handleLogout = () => {
     auth.signOut();
     navigate('/login');
   };
 
+  // Handle specialization click to show recommended doctors
   const handleSpecializationClick = (specialization) => {
     setRecommendedDoctors(doctors[specialization] || []);
   };
 
+  // Handle doctor click to navigate to the doctor details page
   const handleDoctorClick = (doctor) => {
-    // Navigate to DoctorDetails page and pass the doctor data using state
     navigate('/doctor-details', { state: { doctor } });
   };
 
@@ -84,12 +88,12 @@ function Home() {
       </header>
 
       <h1>Here are some recommended specializations with doctors</h1>
-      <br/>
+      <br />
       <div className="specializations">
         {Object.keys(doctors).map((specialization, index) => (
-          <div 
-            key={index} 
-            className="specialization-card" 
+          <div
+            key={index}
+            className="specialization-card"
             onClick={() => handleSpecializationClick(specialization)}
           >
             <h3>{specialization}</h3>

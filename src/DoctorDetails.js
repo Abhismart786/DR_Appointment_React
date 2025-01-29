@@ -42,7 +42,7 @@ function DoctorDetails() {
       .then(() => {
         // Display the alert with full appointment details
         alert(`
-          Appointment Booked Successfully!
+          your appointment request has been sent Successfully!
           \nDoctor: ${doctor.name}
           \nPatient: ${patientName}
           \nSlot: ${slot}
