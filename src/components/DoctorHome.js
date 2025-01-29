@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth, database, ref, onValue, set, remove } from './Firebase';  // Firebase imports
 import './DoctorHome.css';
+
 function DoctorHome() {
   const navigate = useNavigate();
   const [appointments, setAppointments] = useState([]);  // Holds appointments from Firebase
@@ -59,10 +60,19 @@ function DoctorHome() {
 
   // Handle accepting an appointment
   const handleAcceptAppointment = (appointmentId) => {
+    const updatedAppointments = [...appointments];
+    const appointment = updatedAppointments.find(app => app.id === appointmentId);
     const appointmentRef = ref(database, `appointments/${appointmentId}`);
-    set(appointmentRef, { ...appointments.find(app => app.id === appointmentId), status: 'accepted' })
+
+    // Update the status in Firebase
+    set(appointmentRef, { ...appointment, status: 'accepted' })
       .then(() => {
-        alert('Appointment accepted!');
+        // Update the local state to reflect the accepted status
+        appointment.status = 'accepted';
+        setAppointments(updatedAppointments); // Trigger re-render with the updated status
+
+        // Alert with full information of doctor and patient
+        alert(`Appointment Accepted!\n\nDoctor: ${appointment.doctor}\nPatient: ${appointment.patientName}\nTime: ${appointment.slot}\nStatus: Accepted`);
       })
       .catch((error) => {
         alert('Error accepting appointment: ' + error.message);
@@ -71,10 +81,17 @@ function DoctorHome() {
 
   // Handle rejecting an appointment
   const handleRejectAppointment = (appointmentId) => {
+    const updatedAppointments = [...appointments];
+    const appointment = updatedAppointments.find(app => app.id === appointmentId);
     const appointmentRef = ref(database, `appointments/${appointmentId}`);
-    remove(appointmentRef)
+
+    remove(appointmentRef)  // Remove the appointment
       .then(() => {
-        alert('Appointment rejected and removed!');
+        // Remove the appointment from the local state
+        setAppointments(updatedAppointments.filter(app => app.id !== appointmentId));
+
+        // Alert with full information of doctor and patient
+        alert(`Appointment Rejected!\n\nDoctor: ${appointment.doctor}\nPatient: ${appointment.patientName}\nTime: ${appointment.slot}\nStatus: Rejected`);
       })
       .catch((error) => {
         alert('Error rejecting appointment: ' + error.message);
@@ -84,7 +101,7 @@ function DoctorHome() {
   return (
     <div className="doctor-home-container">
       <header className="header">
-        <h1>Welcome, Dr. {user.displayName || 'Doctor'}!</h1>
+        <h1>Welcome,  {user.displayName || 'Doctor'}!</h1>
         <p className="email">Email: {user.email}</p>
       </header>
 
@@ -96,8 +113,19 @@ function DoctorHome() {
               <p><strong>Patient:</strong> {appointment.patientName}</p>
               <p><strong>Doctor:</strong> {appointment.doctor}</p>
               <p><strong>Time:</strong> {appointment.slot}</p>
-              <button onClick={() => handleAcceptAppointment(appointment.id)}>Accept</button>
-              <button onClick={() => handleRejectAppointment(appointment.id)}>Reject</button>
+              <p><strong>Status:</strong> {appointment.status}</p> {/* Display current status */}
+              <button 
+                onClick={() => handleAcceptAppointment(appointment.id)} 
+                disabled={appointment.status === 'accepted'} // Disable if already accepted
+              >
+                {appointment.status === 'accepted' ? 'Accepted' : 'Accept'}
+              </button>
+              <button 
+                onClick={() => handleRejectAppointment(appointment.id)} 
+                disabled={appointment.status === 'rejected'} // Disable if already rejected
+              >
+                {appointment.status === 'rejected' ? 'Rejected' : 'Reject'}
+              </button>
             </li>
           ))
         ) : (

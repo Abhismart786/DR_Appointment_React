@@ -8,9 +8,11 @@ const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("patient"); // Default role is "patient"
   const [error, setError] = useState(""); // For displaying error messages
   const navigate = useNavigate();  // For navigation
+
+  // Default role is "patient", no need to select role from the form
+  const role = "patient"; // Hardcoded as "patient"
 
   // Handle form submission
   const handleSubmit = async (e) => {
@@ -35,15 +37,11 @@ const Signup = () => {
       const userRef = ref(database, "users/" + user.uid);
       await set(userRef, {
         email: user.email,
-        role: role,  // Store user role (doctor or patient)
+        role: role,  // Store user role (hardcoded as "patient")
       });
 
-      // Redirect to the correct page based on user role
-      if (role === "doctor") {
-        navigate("/dr-home");  // Redirect to Doctor Home if role is "doctor"
-      } else {
-        navigate("/home");  // Redirect to User Home if role is "patient"
-      }
+      // Redirect to the correct page (home page for patient)
+      navigate("/home");  // Redirect to User Home if role is "patient"
     } catch (error) {
       console.error("Error creating user:", error);
       if (error.code === "auth/email-already-in-use") {
@@ -51,17 +49,6 @@ const Signup = () => {
       } else {
         setError("Failed to create an account. Please try again.");
       }
-    }
-  };
-
-  // Navigate to doctor signup page when "Doctor" is selected
-  const handleRoleChange = (e) => {
-    const selectedRole = e.target.value;
-    setRole(selectedRole);
-
-    // If doctor is selected, navigate to the doctor signup page
-    if (selectedRole === "doctor") {
-      navigate("/dr-signup");  // Navigate to Doctor Signup
     }
   };
 
@@ -97,12 +84,6 @@ const Signup = () => {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Enter your password"
         />
-
-        <label htmlFor="role">Select Role</label>
-        <select id="role" value={role} onChange={handleRoleChange}>
-          <option value="patient">Patient</option>
-          <option value="doctor">Doctor</option>
-        </select>
 
         <button type="submit">Sign Up</button>
 

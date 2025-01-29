@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { database, ref, push, set } from './components/Firebase';  // Import push
 import './DoctorDetalis.css';
+
 function DoctorDetails() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { doctor, setAppointments } = location.state;  // Destructure correctly
+  const { doctor } = location.state;  // Destructure correctly
 
   const [availableSlots, setAvailableSlots] = useState([]);
   const [patientName, setPatientName] = useState('');
@@ -39,8 +40,16 @@ function DoctorDetails() {
     const newAppointmentRef = push(appointmentsRef);  // Generates a unique ID
     set(newAppointmentRef, appointment)
       .then(() => {
-        alert('Appointment booked successfully!');
-        navigate('/doctor-home');
+        // Display the alert with full appointment details
+        alert(`
+          Appointment Booked Successfully!
+          \nDoctor: ${doctor.name}
+          \nPatient: ${patientName}
+          \nSlot: ${slot}
+          \nStatus: Pending
+          \nTime: ${new Date().toLocaleString()}
+        `);
+        navigate('/home');
       })
       .catch((error) => {
         alert('Error booking appointment: ' + error.message);
