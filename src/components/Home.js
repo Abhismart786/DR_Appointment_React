@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth } from './Firebase';
+
  // Assuming you have some basic styles for this component.
 
 const doctors = {
@@ -40,11 +41,11 @@ const doctors = {
     { name: 'Dr. William Evans', specialization: 'Psychiatrist', phone: '777-333-2222', rating: 4.6, fee: 160 },
     { name: 'Dr. Nancy Wright', specialization: 'Psychiatrist', phone: '888-444-6666', rating: 4.5, fee: 170 }
   ],
-  'Gastroenterology': [
-    { name: 'Dr. Steven Rogers', specialization: 'Gastroenterologist', phone: '999-000-1234', rating: 4.7, fee: 180 },
-    { name: 'Dr. Karen Lewis', specialization: 'Gastroenterologist', phone: '666-777-8888', rating: 4.6, fee: 160 }
+  'Gastrology': [
+    { name: 'Dr. Steven Rogers', specialization: 'Gastrologist', phone: '999-000-1234', rating: 4.7, fee: 180 },
+    { name: 'Dr. Karen Lewis', specialization: 'Gastrologist', phone: '666-777-8888', rating: 4.6, fee: 160 }
   ],
-  // Other specialties...
+  
 };
 
 function Home() {

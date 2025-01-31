@@ -194,51 +194,112 @@ a:hover {
 }
 
 /* Home Page */
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+/* Home Container */
 .home-container {
   width: 100%;
-  max-width: 600px;
+  max-width: 1000px;
   margin: 50px auto;
-  padding: 40px;
-  background-color: #fff;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  padding: 30px;
+  background-color: #ffffff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
   text-align: center;
+  transition: all 0.3s ease;
+}
+
+.home-container:hover {
+  transform: translateY(-5px);
 }
 
 .home-container h1 {
-  font-size: 24px;
+  font-size: 28px;
+  font-weight: 400;
   color: #2c3e50;
+  margin-bottom: 20px;
 }
 
 .home-container p {
-  color: #555;
+  color: #7f8c8d;
   font-size: 16px;
+  margin-bottom: 30px;
 }
 
 .home-container button {
-  margin-top: 20px;
   padding: 12px 25px;
-  background-color: #e74c3c;
+  background-color: #3498db;
   color: white;
   border-radius: 6px;
   font-size: 16px;
   font-weight: bold;
-  transition: background-color 0.3s;
+  border: none;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
 }
 
 .home-container button:hover {
-  background-color: #c0392b;
+  background-color: #2980b9;
+  transform: translateY(-3px);
+}
+
+.home-container button:active {
+  background-color: #21618c;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .sign-up-container,
-  .login-container,
+  .home-container {
+    width: 90%;
+    padding: 25px;
+  }
+
+  .home-container h1 {
+    font-size: 24px;
+  }
+
+  .home-container p {
+    font-size: 24px;
+  }
+
+  .home-container button {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
   .home-container {
     width: 90%;
     padding: 20px;
   }
+
+  .home-container h1 {
+    font-size: 20px;
+  }
+
+  .home-container p {
+    font-size: 5px;
+  }
+
+  .home-container button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+  }
 }
+
 /* Home.css */
 
 /* Global Styles */
@@ -275,7 +336,7 @@ header h1 {
 
 .email {
   color: #777;
-  font-size: 1rem;
+  font-size: 2rem;
   margin-top: 10px;
 }
 
@@ -303,12 +364,12 @@ header h1 {
 }
 
 .specialization-card h3 {
-  font-size: 1.5rem;
+  font-size: 1.rem;
   font-weight: bold;
 }
 
 .specialization-card p {
-  font-size: 1rem;
+  font-size: 2rem;
 }
 
 /* Recommended Doctors Section */
@@ -327,7 +388,7 @@ header h1 {
 }
 
 .recommended-doctors li h4 {
-  font-size: 1.5rem;
+  font-size: 2rem;
   color: #4caf50;
   margin-bottom: 10px;
 }
