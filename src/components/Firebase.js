@@ -2,7 +2,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
 import { getAuth } from 'firebase/auth';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile ,sendPasswordResetEmail} from 'firebase/auth';
 import { getDatabase, ref, set, push, get, onValue, remove } from 'firebase/database';  // <-- Add push here
 
 // Firebase config (use your actual config)
@@ -23,4 +23,4 @@ const auth = getAuth(app);
 const database = getDatabase(app);  // Initialize Firebase Database
 
 // Export required functions
-export { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, database, ref, set, push, get, onValue, remove };
+export { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, database, ref, set, push, get, onValue, remove ,sendPasswordResetEmail};
